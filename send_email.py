@@ -10,6 +10,7 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 import base64
 from email.mime.text import MIMEText
+import config
 
 
 def create_message(sender, to, subject, message_text):
@@ -78,18 +79,16 @@ def get_credentials():
 def main():
     service = build("gmail", "v1", credentials=get_credentials())
 
-    message = create_message(
-        "qwane4501@gmail.com", "qwane4501@gmail.com", "test", "test_body"
-    )
+    message = create_message(config.email, config.email, "test", "test_body")
     send_message(service, "me", message)
 
+
 def send_uscis_update(msg):
-    email_list = ["qwane4501@gmail.com", "jaikwan.bae@gmail.com"]
+    email_list = config.email_list
     service = build("gmail", "v1", credentials=get_credentials())
     for email in email_list:
-        message = create_message("qwane4501@gmail.com", email, "USCIS Update", msg)
+        message = create_message(config.email, email, "USCIS Update", msg)
         send_message(service, "me", message)
-
 
 
 if __name__ == "__main__":
