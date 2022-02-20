@@ -1,2 +1,0 @@
-# Run email_on_update.sh every hour
-00 * * * * zsh ~/git/checkUSCIS/email_on_update.sh
