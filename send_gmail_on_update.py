@@ -11,6 +11,7 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 import base64
 from email.mime.text import MIMEText
 import config
+import checkUSCIS as uscis
 
 
 def create_message(sender, to, subject, message_text):
@@ -76,7 +77,7 @@ def get_credentials():
     return creds
 
 
-def main():
+def test():
     service = build("gmail", "v1", credentials=get_credentials())
 
     message = create_message(config.email, config.email, "test", "test_body")
@@ -84,11 +85,17 @@ def main():
 
 
 def send_uscis_update(msg):
-    email_list = config.email_list
+    email_list = config.email_list  # list of recipient emails
     service = build("gmail", "v1", credentials=get_credentials())
     for email in email_list:
         message = create_message(config.email, email, "USCIS Update", msg)
         send_message(service, "me", message)
+
+
+def main():
+    msg = uscis.requestStatus(config.case_num)
+    if msg != config.old_message:
+        send_uscis_update(msg)
 
 
 if __name__ == "__main__":
