@@ -3,3 +3,4 @@ __pycache__
 config.py
 crontab
 *.sh
+.DS_Store
