@@ -73,9 +73,9 @@ def get_credentials():
         else:
             flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open(token_path, "w") as token:
-            token.write(creds.to_json())
+        ## Save the credentials for the next run -> commented since lambda doesn't have write permission
+        #with open(token_path, "w") as token:
+        #    token.write(creds.to_json())
 
     return creds
 
